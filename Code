@@ -1,0 +1,23 @@
+-- Services
+local RunService = game:GetService('RunService')
+
+-- Values
+local Character = script.Parent
+local Start = Character:WaitForChild('HumanoidRootPart')
+local End = game.Workspace:WaitForChild('SoundPart')
+
+local SoundEffect = game.Workspace.SoundPart.Sound.BehindWall
+
+local RayCastParams = RaycastParams.new()
+RayCastParams.FilterType = Enum.RaycastFilterType.Blacklist
+RayCastParams.FilterDescendantsInstances = {Character, game.Workspace.SoundPart}
+
+-- Logic
+RunService.Heartbeat:Connect(function() -- you can use a while loop if you want
+	local rayresult = workspace:Raycast(Start.Position, End.Position - Start.Position, RayCastParams)
+	if rayresult then
+		SoundEffect.Enabled = true
+	else
+		SoundEffect.Enabled = false
+	end
+end)
